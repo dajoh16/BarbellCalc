@@ -18,10 +18,8 @@
             android:layout_height="46dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
-            android:layout_marginEnd="16dp"
             android:ems="10"
             android:inputType="numberDecimal"
-            app:layout_constraintEnd_toStartOf="@+id/txtViewKg"
             app:layout_constraintStart_toEndOf="@+id/txtViewMaxKg"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,6 +36,31 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/maxKgNumber"
             app:layout_constraintTop_toBottomOf="@+id/maxKgNumber" />
+
+        <RadioGroup
+            android:id="@+id/rdGrpMaxType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/maxKgNumber"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/maxKgNumber"
+            app:layout_constraintTop_toTopOf="@+id/maxKgNumber">
+
+            <RadioButton
+                android:id="@+id/rdBtnKg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="Kg" />
+
+            <RadioButton
+                android:id="@+id/rdBtnLbs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Lbs" />
+        </RadioGroup>
 
         <TextView
             android:id="@+id/txtViewMaxKg"
@@ -58,16 +81,6 @@
             app:layout_constraintBottom_toBottomOf="@+id/percentageNumber"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/percentageNumber" />
-
-        <TextView
-            android:id="@+id/txtViewKg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="44dp"
-            android:text="Kg"
-            app:layout_constraintBottom_toBottomOf="@+id/maxKgNumber"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/maxKgNumber" />
 
         <TextView
             android:id="@+id/txtViewPercent"

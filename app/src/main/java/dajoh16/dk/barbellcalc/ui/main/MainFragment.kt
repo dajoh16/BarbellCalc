@@ -1,8 +1,7 @@
 package dajoh16.dk.barbellcalc.ui.main
 
-import androidx.lifecycle.ViewModelProviders
+
 import android.os.Bundle
-import android.text.Editable
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +9,7 @@ import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import dajoh16.dk.barbellcalc.R
 import kotlinx.android.synthetic.main.main_fragment.*
-import java.math.RoundingMode
+
 
 class MainFragment : Fragment() {
 
@@ -18,7 +17,6 @@ class MainFragment : Fragment() {
         fun newInstance() = MainFragment()
     }
 
-    private lateinit var viewModel: MainViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -37,8 +35,11 @@ class MainFragment : Fragment() {
         radioGroup.setOnCheckedChangeListener { radioGroup, i ->
             onMaxKgInputChanged()
         }
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-        // TODO: Use the ViewModel
+
+        rdGrpMaxType.setOnCheckedChangeListener { radioGroup, i ->
+            onMaxKgInputChanged()
+        }
+
     }
 
     fun onMaxKgInputChanged(){
@@ -51,9 +52,13 @@ class MainFragment : Fragment() {
         displayPlates()
     }
 
-    fun calculateKg(max: Double, percentage: Int): Double{
-        var calcKg = max * (percentage/100.0)
-        if(calcKg%1.25 == 0.0){
+    fun calculateKg(max: Double, percentage: Int, lbs: Boolean): Double{
+        var kg = max
+        if(lbs){
+            kg = max * 0.45359237
+        }
+        var calcKg = kg * (percentage/100.0)
+        if(calcKg%2.5 == 0.0){
             return calcKg
         } else {
             return (Math.round(calcKg/2.50))*2.5;
@@ -64,7 +69,8 @@ class MainFragment : Fragment() {
         try {
             var max = maxKgNumber.text.toString().toDouble()
             var percentage = percentageNumber.text.toString().toInt()
-            var calcKg = calculateKg(max,percentage)
+            var lbs = rdGrpMaxType.checkedRadioButtonId == rdBtnLbs.id
+            var calcKg = calculateKg(max,percentage, lbs)
             val kgRounded = "%.2f".format(calcKg)
             txtKgRes.setText(kgRounded)
         } catch (e: NumberFormatException ){
@@ -77,7 +83,8 @@ class MainFragment : Fragment() {
         try {
             var max = maxKgNumber.text.toString().toDouble()
             var percentage = percentageNumber.text.toString().toInt()
-            var calcKg = calculateKg(max,percentage)
+            var lbs = rdGrpMaxType.checkedRadioButtonId == rdBtnLbs.id
+            var calcKg = calculateKg(max,percentage, lbs)
             var plates = calculatePlates(calcKg)
 
             txtViewTwentyPlates.text = (plates[0].toString())
